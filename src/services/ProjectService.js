@@ -302,15 +302,15 @@ class ProjectService {
           model: Task,
           as: 'projectTask',
           attributes: ['id', 'title', 'time_spent']
-        },
-        {
-          model: Tag,
-          as: 'assignedProjectTag',
-          attributes: ['id', 'title']
-          // through: {
-          //   attributes: [],
-          // },
         }
+        // {
+        //   model: Tag,
+        //   as: 'assignedProjectTag',
+        //   attributes: ['id', 'title']
+        //   // through: {
+        //   //   attributes: [],
+        //   // },
+        // }
       ]
     });
     if (!project) throw new Error('Project not found!');
@@ -353,12 +353,12 @@ class ProjectService {
           model: Task,
           as: 'projectTask',
           attributes: ['id', 'title']
-        },
-        {
-          model: Tag,
-          as: 'assignedProjectTag',
-          attributes: ['id', 'title']
         }
+        // {
+        //   model: Tag,
+        //   as: 'assignedProjectTag',
+        //   attributes: ['id', 'title']
+        // }
       ]
     });
     if (!project) throw new Error('Project not found');

@@ -15,6 +15,7 @@ const roleVerify = (userrole) => {
   return async (req, res, next) => {
     try {
       const user = getAuthenticatedUser(req);
+      console.log(user);
       const role = await Roles.findOne({
         where: { name: user.role } // Assuming association is defined
       });
