@@ -21,6 +21,8 @@ router.get('/tasksInProgress', TaskController.getTasksInProgress);
 router.get('/getAllProjects', ProjectController.getAllProjects);
 router.post('/createproject', ProjectController.createProject);
 router.post('/getprojectbyid', ProjectController.getProjectById);
+router.post('/createTask', TaskController.createTask);
+router.delete('/deleteTask', TaskController.deleteTask);
 
 router.get(
   '/allTasks',
@@ -76,12 +78,6 @@ router.delete(
 );
 
 //Router for task CRUD action.
-router.post(
-  '/createtask',
-  UacPermission('edit_task', 'delete_tasks'),
-  TaskController.createTask
-);
-
 router.get(
   '/dashboard/favouriteproject',
   UacPermission('edit_task', 'delete_tasks'),
@@ -92,11 +88,6 @@ router.put(
   '/dashboard/updatetask',
   UacPermission('edit_task', 'delete_tasks'),
   TaskController.updateTask
-);
-router.delete(
-  '/dashboard/deletetask',
-  UacPermission('edit_task', 'delete_tasks'),
-  TaskController.deleteTask
 );
 
 router.post(
