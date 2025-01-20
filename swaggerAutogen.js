@@ -5,7 +5,6 @@ const doc = {
     title: 'Express API Documentation',
     description: 'Automatically generated API documentation'
   },
-  host: 'https://simple-crud-ldzp.onrender.com:5173', // Replace with your host and port
   schemes: ['http'] // Use https if applicable
 };
 
