@@ -8,13 +8,7 @@ const options = {
       title: 'Express API Documentation',
       version: '1.0.0',
       description: 'API documentation for my Express.js backend'
-    },
-    servers: [
-      {
-        url: 'https://simple-crud-ldzp.onrender.com:5173', // Replace with your server URL
-        layout: 'StandaloneLayout'
-      }
-    ]
+    }
   },
   apis: [
     './index.js',
