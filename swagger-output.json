@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:5173",
+  "host": "https://simple-crud-ldzp.onrender.com:5173",
   "basePath": "/",
   "schemes": [
     "http"
