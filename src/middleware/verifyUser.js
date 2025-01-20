@@ -8,16 +8,15 @@ const jwt = require('jsonwebtoken');
  * @returns {Object|null} - The decoded user object or null if the token is invalid.
  */
 function getAuthenticatedUser(req) {
-  // console.log(req);
-  const token = req.headers['authorization']?.split(' ')[1]; // Get token from 'Authorization' header
-  // console.log(token);
+  const reqtoken = req.headers.authorization;
+  const token = reqtoken.split(' ')[1]; // Get token from 'Authorization' header
+
   if (!token) {
     return null;
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN);
-    console.log(decoded);
     const user = {
       id: decoded.id,
       email: decoded.email,

@@ -20,6 +20,7 @@ class AuthUserService {
       dob,
       role
     } = req.body;
+    // biome-ignore lint/style/useTemplate: <explanation>
     const full_name = first_name + ' ' + last_name;
     // Check if email is already in use
     const existingUser = await User.findOne({ where: { email } });

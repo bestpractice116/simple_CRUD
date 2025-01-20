@@ -35,6 +35,7 @@ class authClientService {
       agree_update_terms,
       role
     } = req.body;
+    // biome-ignore lint/style/useTemplate: <explanation>
     const full_name = first_name + ' ' + last_name;
     // Check if email already exists
     const existingClient = await Client.findOne({ where: { email } });
@@ -88,26 +89,22 @@ class authClientService {
   }
 
   async findClientByEmail(data) {
-    try {
-      const { email } = data;
-      return await Client.findOne(
-        { where: { email } },
-        {
-          include: [
-            {
-              model: Project,
-              as: 'requestedClientProject'
-            },
-            {
-              model: Task,
-              as: 'clientTask'
-            }
-          ]
-        }
-      );
-    } catch (error) {
-      throw error;
-    }
+    const { email } = data;
+    return await Client.findOne(
+      { where: { email } },
+      {
+        include: [
+          {
+            model: Project,
+            as: 'requestedClientProject'
+          },
+          {
+            model: Task,
+            as: 'clientTask'
+          }
+        ]
+      }
+    );
   }
   // Get all Clients
   async getAllClients() {

@@ -53,6 +53,7 @@ class ProjectService {
     const { users } = req;
     users.map(async (user) => {
       const projectVA = await User.findByPk(user);
+      // biome-ignore lint/style/useTemplate: <explanation>
       if (!projectVA) throw new Error('User' + user + 'not found!');
       await projectVA.addAssignedUserProject(project);
     });
@@ -99,183 +100,159 @@ class ProjectService {
   }
 
   async getAllFavouriteProjectForClient(userId) {
-    try {
-      const user = await User.findByPk(userId, {
-        include: {
-          model: Project,
-          include: [
-            {
-              model: User,
-              as: 'assignedProjectUser',
-              attributes: ['id', 'full_name'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Client,
-              as: 'requestedProjectClient',
-              attributes: ['id', 'full_name'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Task,
-              as: 'projectTask',
-              attributes: ['id', 'title']
-            },
-            {
-              model: Tag,
-              as: 'assignedProjectTag',
-              attributes: ['id', 'title']
+    const user = await User.findByPk(userId, {
+      include: {
+        model: Project,
+        include: [
+          {
+            model: User,
+            as: 'assignedProjectUser',
+            attributes: ['id', 'full_name'],
+            through: {
+              attributes: []
             }
-          ],
-          as: 'favoriteProject'
-        }
-      });
-      if (!user) throw new Error('User not found!');
-      return user.favoriteProject;
-    } catch (error) {
-      throw error;
-    }
+          },
+          {
+            model: Client,
+            as: 'requestedProjectClient',
+            attributes: ['id', 'full_name'],
+            through: {
+              attributes: []
+            }
+          },
+          {
+            model: Task,
+            as: 'projectTask',
+            attributes: ['id', 'title']
+          },
+          {
+            model: Tag,
+            as: 'assignedProjectTag',
+            attributes: ['id', 'title']
+          }
+        ],
+        as: 'favoriteProject'
+      }
+    });
+    if (!user) throw new Error('User not found!');
+    return user.favoriteProject;
   }
 
   //Add Favourite Project
   async addFavouriteProject(userinfo, projectID) {
-    try {
-      const { email } = userinfo;
-      const project = await Project.findByPk(projectID);
-      const user = await User.findOne({ where: { email } });
-      if (user) await user.addFavoriteProject(project);
-      const client = await Client.findOne({ where: { email } });
-      if (client) await client.addFavoriteProject(project);
-      if (!client && !user) throw new Error('User Not Found.');
-      return { message: 'Favourite Project Successfully added.' };
-    } catch (error) {
-      throw error;
-    }
+    const { email } = userinfo;
+    const project = await Project.findByPk(projectID);
+    const user = await User.findOne({ where: { email } });
+    if (user) await user.addFavoriteProject(project);
+    const client = await Client.findOne({ where: { email } });
+    if (client) await client.addFavoriteProject(project);
+    if (!client && !user) throw new Error('User Not Found.');
+    return { message: 'Favourite Project Successfully added.' };
   }
 
   async removeFavouriteProject(userinfo, projectID) {
-    try {
-      const { email } = userinfo;
-      const project = await Project.findByPk(projectID);
-      if (!project) {
-        throw new Error('Project not found.');
-      }
-      const user = await User.findOne({ where: { email } });
-      if (user) await user.removeFavoriteProject(project);
-      const client = await Client.findOne({ where: { email } });
-      if (client) await user.removeFavoriteProject(project);
-      if (!client && !user) throw new Error('User Not Found.');
-      return { message: 'Project Favour Successfully removed.' };
-    } catch (error) {
-      throw error;
+    const { email } = userinfo;
+    const project = await Project.findByPk(projectID);
+    if (!project) {
+      throw new Error('Project not found.');
     }
+    const user = await User.findOne({ where: { email } });
+    if (user) await user.removeFavoriteProject(project);
+    const client = await Client.findOne({ where: { email } });
+    if (client) await user.removeFavoriteProject(project);
+    if (!client && !user) throw new Error('User Not Found.');
+    return { message: 'Project Favour Successfully removed.' };
   }
 
   //Get all projects with associated users and clients.
   async getAllProjectsForClient(userId) {
-    try {
-      const user = await Client.findByPk(userId, {
-        include: {
-          model: Project,
-          include: [
-            {
-              model: User,
-              as: 'assignedProjectUser',
-              attributes: ['id', 'full_name'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Client,
-              as: 'requestedProjectClient',
-              attributes: ['id', 'full_name'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Task,
-              as: 'projectTask',
-              attributes: ['id', 'title']
-            },
-            {
-              model: Tag,
-              as: 'assignedProjectTag',
-              attributes: ['id', 'title']
+    const user = await Client.findByPk(userId, {
+      include: {
+        model: Project,
+        include: [
+          {
+            model: User,
+            as: 'assignedProjectUser',
+            attributes: ['id', 'full_name'],
+            through: {
+              attributes: []
             }
-          ],
-          as: 'requestedClientProject'
-        }
-      });
-      if (!user) throw new Error('User not found!');
-      return user.requestedClientProject;
-    } catch (error) {
-      throw error;
-    }
+          },
+          {
+            model: Client,
+            as: 'requestedProjectClient',
+            attributes: ['id', 'full_name'],
+            through: {
+              attributes: []
+            }
+          },
+          {
+            model: Task,
+            as: 'projectTask',
+            attributes: ['id', 'title']
+          },
+          {
+            model: Tag,
+            as: 'assignedProjectTag',
+            attributes: ['id', 'title']
+          }
+        ],
+        as: 'requestedClientProject'
+      }
+    });
+    if (!user) throw new Error('User not found!');
+    return user.requestedClientProject;
   }
 
   //Get all projects with associated users and clients.
   async getAllProjectsForUser(userId) {
-    try {
-      const user = await User.findByPk(userId, {
-        include: {
-          model: Project,
-          include: [
-            {
-              model: User,
-              as: 'assignedProjectUser',
-              attributes: ['id', 'full_name'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Client,
-              as: 'requestedProjectClient',
-              attributes: ['id', 'full_name'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Task,
-              as: 'projectTask',
-              attributes: ['id', 'title']
-            },
-            {
-              model: Tag,
-              as: 'assignedProjectTag',
-              attributes: ['id', 'title'],
-              through: {
-                attributes: []
-              }
+    const user = await User.findByPk(userId, {
+      include: {
+        model: Project,
+        include: [
+          {
+            model: User,
+            as: 'assignedProjectUser',
+            attributes: ['id', 'full_name'],
+            through: {
+              attributes: []
             }
-          ],
-          as: 'assignedUserProject'
-        }
-      });
-      if (!user) throw new Error('User not found!');
-      return user.assignedUserProject;
-    } catch (error) {
-      throw error;
-    }
+          },
+          {
+            model: Client,
+            as: 'requestedProjectClient',
+            attributes: ['id', 'full_name'],
+            through: {
+              attributes: []
+            }
+          },
+          {
+            model: Task,
+            as: 'projectTask',
+            attributes: ['id', 'title']
+          },
+          {
+            model: Tag,
+            as: 'assignedProjectTag',
+            attributes: ['id', 'title'],
+            through: {
+              attributes: []
+            }
+          }
+        ],
+        as: 'assignedUserProject'
+      }
+    });
+    if (!user) throw new Error('User not found!');
+    return user.assignedUserProject;
   }
 
   async getAllProjectByUserEmail(email) {
-    try {
-      const user = await User.findOne({ where: { email: email } });
-      if (user) return await this.getAllProjectsForUser(user.id);
-      const client = await Client.findOne({ where: { email: email } });
-      if (client) return await this.getAllProjectsForClient(client.id);
-      if (!user && !client) throw new Error('User not Found!');
-    } catch (error) {
-      throw error;
-    }
+    const user = await User.findOne({ where: { email: email } });
+    if (user) return await this.getAllProjectsForUser(user.id);
+    const client = await Client.findOne({ where: { email: email } });
+    if (client) return await this.getAllProjectsForClient(client.id);
+    if (!user && !client) throw new Error('User not Found!');
   }
 
   //Get all projects.
@@ -370,7 +347,7 @@ class ProjectService {
     const project = await Project.findByPk(id);
     await project.update(updates);
     if (client) {
-      let upclient = await Client.findOne({ where: { full_name: client } });
+      const upclient = await Client.findOne({ where: { full_name: client } });
       if (!upclient) {
         throw new Error('Client not found.');
       }
@@ -406,68 +383,60 @@ class ProjectService {
   }
 
   async deleteProject(id) {
-    try {
-      const project = await Project.findByPk(id);
+    const project = await Project.findByPk(id);
 
-      if (!project) {
-        throw new Error('Project not found.');
-      }
-
-      await project.destroy();
-
-      return { message: 'Project and its associations deleted successfully' };
-    } catch (error) {
-      throw error;
+    if (!project) {
+      throw new Error('Project not found.');
     }
+
+    await project.destroy();
+
+    return { message: 'Project and its associations deleted successfully' };
   }
 
   async getProjectByTag(tagId) {
-    try {
-      const tag = await Tag.findByPk(tagId, {
-        include: {
-          model: Project,
-          include: [
-            {
-              model: User,
-              as: 'assignedProjectUser',
-              attributes: ['id', 'full_name'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Client,
-              as: 'requestedProjectClient',
-              attributes: ['id', 'full_name'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Task,
-              as: 'projectTask',
-              attributes: ['id', 'title'],
-              through: {
-                attributes: []
-              }
-            },
-            {
-              model: Tag,
-              as: 'assignedProjectTag',
-              attributes: ['id', 'title'],
-              through: {
-                attributes: []
-              }
+    const tag = await Tag.findByPk(tagId, {
+      include: {
+        model: Project,
+        include: [
+          {
+            model: User,
+            as: 'assignedProjectUser',
+            attributes: ['id', 'full_name'],
+            through: {
+              attributes: []
             }
-          ],
-          as: 'assignedTagProject'
-        }
-      });
-      if (!tag) throw new Error('Tag not found!');
-      return tag.setAssignedTagProject;
-    } catch (error) {
-      throw error;
-    }
+          },
+          {
+            model: Client,
+            as: 'requestedProjectClient',
+            attributes: ['id', 'full_name'],
+            through: {
+              attributes: []
+            }
+          },
+          {
+            model: Task,
+            as: 'projectTask',
+            attributes: ['id', 'title'],
+            through: {
+              attributes: []
+            }
+          },
+          {
+            model: Tag,
+            as: 'assignedProjectTag',
+            attributes: ['id', 'title'],
+            through: {
+              attributes: []
+            }
+          }
+        ],
+        as: 'assignedTagProject'
+      }
+    });
+    if (!tag) throw new Error('Tag not found!');
+    return tag.setAssignedTagProject;
   }
 }
 

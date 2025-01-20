@@ -143,70 +143,62 @@ class TaskService {
 
   //Get all tasks with associated users and clients.
   async getAllTasksForClient(userId) {
-    try {
-      const user = await Client.findByPk(userId, {
-        include: {
-          model: Task,
-          include: [
-            {
-              model: User,
-              as: 'assignedTaskUser'
-            },
-            {
-              model: Client,
-              as: 'requestedTaskClient'
-            },
-            {
-              model: Project,
-              as: 'taskProject'
-            },
-            {
-              model: Tag,
-              as: 'assignedTaskTag'
-            }
-          ],
-          as: 'assignedTaskClient'
-        }
-      });
-      if (!user) throw new Error('User not found!');
-      return user.requestedClientProject;
-    } catch (error) {
-      throw error;
-    }
+    const user = await Client.findByPk(userId, {
+      include: {
+        model: Task,
+        include: [
+          {
+            model: User,
+            as: 'assignedTaskUser'
+          },
+          {
+            model: Client,
+            as: 'requestedTaskClient'
+          },
+          {
+            model: Project,
+            as: 'taskProject'
+          },
+          {
+            model: Tag,
+            as: 'assignedTaskTag'
+          }
+        ],
+        as: 'assignedTaskClient'
+      }
+    });
+    if (!user) throw new Error('User not found!');
+    return user.requestedClientProject;
   }
 
   //Get all tasks with associated users and clients.
   async getAllTasksForUser(userId) {
-    try {
-      const user = await User.findByPk(userId, {
-        include: {
-          model: Task,
-          include: [
-            {
-              model: User,
-              as: 'assignedTaskUser'
-            },
-            {
-              model: Client,
-              as: 'requestedTaskClient'
-            },
-            {
-              model: Project,
-              as: 'taskProject'
-            },
-            {
-              model: Tag,
-              as: 'assignedTaskTag'
-            }
-          ],
-          as: 'assignedTaskUser'
-        }
-      });
-      if (!user) throw new Error('User not found!');
-      return user.requestedClientProject;
-    } catch (error) {
-      throw error;
-    }
+    const user = await User.findByPk(userId, {
+      include: {
+        model: Task,
+        include: [
+          {
+            model: User,
+            as: 'assignedTaskUser'
+          },
+          {
+            model: Client,
+            as: 'requestedTaskClient'
+          },
+          {
+            model: Project,
+            as: 'taskProject'
+          },
+          {
+            model: Tag,
+            as: 'assignedTaskTag'
+          }
+        ],
+        as: 'assignedTaskUser'
+      }
+    });
+    if (!user) throw new Error('User not found!');
+    return user.requestedClientProject;
   }
 
   //Get all tasks By Id
@@ -276,7 +268,7 @@ class TaskService {
     const task = await Task.findByPk(id);
     await task.update(updates);
     if (client) {
-      let upclient = await Client.findOne({ where: { full_name: client } });
+      const upclient = await Client.findOne({ where: { full_name: client } });
       if (!upclient) {
         throw new Error('Client not found.');
       }
@@ -328,36 +320,32 @@ class TaskService {
   }
 
   async getProjectByTag(tagId) {
-    try {
-      const tag = await Tag.findByPk(tagId, {
-        include: {
-          model: Task,
-          include: [
-            {
-              model: User,
-              as: 'assignedTaskUser'
-            },
-            {
-              model: Client,
-              as: 'taskClient'
-            },
-            {
-              model: Project,
-              as: 'taskProject'
-            },
-            {
-              model: Tag,
-              as: 'assignedTaskTag'
-            }
-          ],
-          as: 'assignedTagTask'
-        }
-      });
-      if (!tag) throw new Error('Tag not found!');
-      return tag.setAssignedTagTask;
-    } catch (error) {
-      throw error;
-    }
+    const tag = await Tag.findByPk(tagId, {
+      include: {
+        model: Task,
+        include: [
+          {
+            model: User,
+            as: 'assignedTaskUser'
+          },
+          {
+            model: Client,
+            as: 'taskClient'
+          },
+          {
+            model: Project,
+            as: 'taskProject'
+          },
+          {
+            model: Tag,
+            as: 'assignedTaskTag'
+          }
+        ],
+        as: 'assignedTagTask'
+      }
+    });
+    if (!tag) throw new Error('Tag not found!');
+    return tag.setAssignedTagTask;
   }
 }
 

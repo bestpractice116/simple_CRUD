@@ -58,12 +58,10 @@ class ClientController {
         req.params.id,
         data
       );
-      res
-        .status(200)
-        .json({
-          message: 'Client updated successfully',
-          client: updatedClient
-        });
+      res.status(200).json({
+        message: 'Client updated successfully',
+        client: updatedClient
+      });
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
