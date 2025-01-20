@@ -10,12 +10,4 @@ const Profile = sequelize.define(
   }
 );
 
-Profile.associate = function (models) {
-  Profile.belongsTo(models.User, {
-    foreignKey: 'profileable_id',
-    constraints: false,
-    as: 'profileable'
-  });
-};
-
 module.exports = Profile;

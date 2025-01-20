@@ -6,6 +6,7 @@ const getRoleById = async (id) => {
     const role = await Roles.findByPk(id);
     return role;
   } catch (error) {
+    // biome-ignore lint/style/useTemplate: <explanation>
     throw new Error('Error fetching role: ' + error.message);
   }
 };
@@ -17,6 +18,7 @@ const getRoleIdByName = async (roleName) => {
     });
     return role.id; // Return the role_id (which is the same as 'id' in the database)
   } catch (error) {
+    // biome-ignore lint/style/useTemplate: <explanation>
     throw new Error('Error fetching role by name: ' + error.message);
   }
 };

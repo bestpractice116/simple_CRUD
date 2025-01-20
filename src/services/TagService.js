@@ -9,16 +9,12 @@ const getAllTags = async () => {
 };
 
 const updateTag = async (id, data) => {
-  try {
-    const tag = await Tag.findByPk(id);
-    if (tag) {
-      await tag.update(data);
-      return { message: 'Tag Updated Successfully.' };
-    }
-    throw new Error('Tag Not Found!');
-  } catch (error) {
-    throw error;
+  const tag = await Tag.findByPk(id);
+  if (tag) {
+    await tag.update(data);
+    return { message: 'Tag Updated Successfully.' };
   }
+  throw new Error('Tag Not Found!');
 };
 
 const deleteTag = async (id) => {
