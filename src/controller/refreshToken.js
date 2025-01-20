@@ -3,7 +3,7 @@ const Client = require('../../models/Client');
 const ModelRole = require('../../models/ModelRole');
 const Roles = require('../../models/Roles');
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const env = require('dotenv').config();
 const handleRef = async (req, res, next) => {
