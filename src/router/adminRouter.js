@@ -8,7 +8,7 @@ const UacPermission = require('../middleware/UacMiddleware');
 const TaskController = require('../controller/TaskController');
 const UserController = require('../controller/UserController');
 const ClientController = require('../controller/ClientController');
-const TimeTrackController = require('../controller/timeTrackController');
+const TimeTrackController = require('../controller/TimeTrackController');
 
 //Router for project CRUD action.
 router.post('/', async (req, res) => {

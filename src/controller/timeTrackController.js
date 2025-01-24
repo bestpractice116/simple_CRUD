@@ -1,14 +1,14 @@
-const timeTrackService = require('../services/timeTrackService');
+const TimeTrackService = require('../services/timeTrackService');
 const roleService = require('../services/roleService');
 
 const { getAuthenticatedUser } = require('../middleware/verifyUser');
 require('../middleware/verifyUser');
 
-class timeTrackController {
+class TimeTrackController {
   //Create timeTrack.
   async createTimeTrack(req, res) {
     try {
-      const timeTrack = await timeTrackService.createTimeTrack(req.body);
+      const timeTrack = await TimeTrackService.createTimeTrack(req.body);
       res.status(201).json(timeTrack);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -17,7 +17,7 @@ class timeTrackController {
 
   async getAllTimeTracks(req, res) {
     try {
-      const timeTracks = await timeTrackService.getAllTimeTracks();
+      const timeTracks = await TimeTrackService.getAllTimeTracks();
       res.status(200).json(timeTracks);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -27,7 +27,7 @@ class timeTrackController {
   async getAllTimeTracksForPeriod(req, res) {
     try {
       const { startDate, endDate } = req.query;
-      const timeTracks = await timeTrackService.getAllTimeTracksForPeriod(
+      const timeTracks = await TimeTrackService.getAllTimeTracksForPeriod(
         startDate,
         endDate
       );
@@ -40,7 +40,7 @@ class timeTrackController {
   async getAllTimeTracksForUser(req, res) {
     try {
       const userinfo = getAuthenticatedUser(req);
-      const timeTracks = await timeTrackService.getAllTimeTracksForUser(
+      const timeTracks = await TimeTrackService.getAllTimeTracksForUser(
         userinfo.id
       );
       res.status(200).json(timeTracks);
@@ -58,7 +58,7 @@ class timeTrackController {
           .status(400)
           .json({ message: 'Start date and end date are required.' });
       }
-      const timeTracks = await timeTrackService.getTimeTracksForUser(
+      const timeTracks = await TimeTrackService.getTimeTracksForUser(
         userinfo.id,
         startDate,
         endDate
@@ -92,4 +92,4 @@ class timeTrackController {
   }
 }
 
-module.exports = new timeTrackController();
+module.exports = new TimeTrackController();
