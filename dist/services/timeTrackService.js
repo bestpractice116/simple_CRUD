@@ -5,7 +5,7 @@ const Task = require('../../models/Task');
 const TimeTrack = require('../../models/TimeTrack');
 const Sequelize = require('sequelize');
 
-class timeTrackService {
+class TimeTrackService {
   async createTimeTrack(req) {
     const {
       userId,
@@ -207,4 +207,4 @@ class timeTrackService {
   }
 }
 
-module.exports = new timeTrackService();
+module.exports = new TimeTrackService();

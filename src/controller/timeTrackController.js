@@ -1,4 +1,4 @@
-const TimeTrackService = require('../services/timeTrackService');
+const TimeTrackService = require('../services/TimeTrackService');
 const roleService = require('../services/roleService');
 
 const { getAuthenticatedUser } = require('../middleware/verifyUser');

@@ -16,7 +16,7 @@ const { handleRef } = require('../controller/refreshToken');
 const UacPermission = require('../middleware/UacMiddleware.js');
 const { upload } = require('../services/uploadService.js');
 const roleVerify = require('../middleware/roleVerify.js');
-const TimeTrackController = require('../controller/TimeTrackController.js');
+const TimeTrackController = require('../controller/TimeTrackController');
 
 app.post('/upload-avatar', upload.single('avatar'), (req, res) => {
   if (!req.file) {
