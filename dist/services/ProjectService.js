@@ -191,6 +191,7 @@ class ProjectService {
 
   //Get all projects with associated users and clients.
   async getAllProjectsForUser(userId) {
+    // console.log(userId);
     const user = await User.findByPk(userId, {
       include: {
         model: Project,
@@ -212,18 +213,12 @@ class ProjectService {
           model: Task,
           as: 'projectTask',
           attributes: ['id', 'title']
-        }, {
-          model: Tag,
-          as: 'assignedProjectTag',
-          attributes: ['id', 'title'],
-          through: {
-            attributes: []
-          }
         }],
         as: 'assignedUserProject'
       }
     });
     if (!user) throw new Error('User not found!');
+    console.log(user);
     return user.assignedUserProject;
   }
 
@@ -241,7 +236,7 @@ class ProjectService {
       include: [{
         model: User,
         as: 'assignedProjectUser',
-        attributes: ['id', 'full_name', 'email'],
+        attributes: ['id', 'full_name', 'email', 'position'],
         through: {
           attributes: []
         }

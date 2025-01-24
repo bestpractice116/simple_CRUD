@@ -168,19 +168,16 @@ class TaskService {
           as: 'assignedTaskUser'
         }, {
           model: Client,
-          as: 'requestedTaskClient'
+          as: 'taskClient'
         }, {
           model: Project,
           as: 'taskProject'
-        }, {
-          model: Tag,
-          as: 'assignedTaskTag'
         }],
-        as: 'assignedTaskUser'
+        as: 'assignedUserTask'
       }
     });
     if (!user) throw new Error('User not found!');
-    return user.requestedClientProject;
+    return user.assignedUserTask;
   }
 
   //Get all tasks By Id
