@@ -19,15 +19,15 @@ const Project = sequelize.define(
       allowNull: true
     },
     budget: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     monthly_hours: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     rate: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     start_date: {

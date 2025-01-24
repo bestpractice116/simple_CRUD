@@ -1,25 +1,29 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
-const Item = sequelize.define('Item', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
+const Item = sequelize.define(
+  'Item',
+  {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    }
   },
-  price: {
-    type: DataTypes.DECIMAL,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
-}, {
-  tableName: 'items',
-  timestamps: false,
-});
+  {
+    tableName: 'items',
+    timestamps: false
+  }
+);
 
-Item.associate = function(models) {
+Item.associate = function (models) {
   Item.belongsToMany(models.EstimatesInvoice, {
     through: 'EstimatesInvoiceItem',
     foreignKey: 'item_id',

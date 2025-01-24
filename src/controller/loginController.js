@@ -46,6 +46,8 @@ class LoginController {
       const role_id = modelRole.role_id;
       const roleen = await Roles.findByPk(role_id);
       const role = roleen.name;
+      const username = user.full_name;
+      const userId = user.id;
       const access_token = jwt.sign(
         { id: user.id, email: user.email, role_id: role_id, role: role },
         process.env.JWT_ACCESS_TOKEN,
@@ -75,7 +77,9 @@ class LoginController {
         message: 'Logged in successfully.',
         access_token,
         refresh_token,
-        role
+        role,
+        username,
+        userId
       });
     } catch (error) {
       res.status(500).json({ message: error.message });

@@ -1,81 +1,85 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const EstimatesInvoice = sequelize.define('EstimatesInvoice', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
+const EstimatesInvoice = sequelize.define(
+  'EstimatesInvoice',
+  {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    zip_code: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    note: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    personal_note: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    from_date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    to_date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    total: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    tax_amount: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    final_total: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    created_by: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   },
-  address: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  city: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  state: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  country: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  zip_code: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  type: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  status: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  note: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
-  personal_note: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
-  from_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  to_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  total: {
-    type: DataTypes.DECIMAL,
-    allowNull: false,
-  },
-  tax_amount: {
-    type: DataTypes.DECIMAL,
-    allowNull: false,
-  },
-  final_total: {
-    type: DataTypes.DECIMAL,
-    allowNull: false,
-  },
-  created_by: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-}, {
-  tableName: 'estimates_invoices',
-  timestamps: false,
-});
+  {
+    tableName: 'estimates_invoices',
+    timestamps: false
+  }
+);
 
-EstimatesInvoice.associate = function(models) {
+EstimatesInvoice.associate = function (models) {
   EstimatesInvoice.belongsToMany(models.Item, {
     through: 'EstimatesInvoiceItem',
     foreignKey: 'estimates_invoice_id',

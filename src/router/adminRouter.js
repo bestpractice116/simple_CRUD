@@ -8,6 +8,7 @@ const UacPermission = require('../middleware/UacMiddleware');
 const TaskController = require('../controller/TaskController');
 const UserController = require('../controller/UserController');
 const ClientController = require('../controller/ClientController');
+const TimeTrackController = require('../controller/timeTrackController');
 
 //Router for project CRUD action.
 router.post('/', async (req, res) => {
@@ -23,6 +24,9 @@ router.post('/createproject', ProjectController.createProject);
 router.post('/getprojectbyid', ProjectController.getProjectById);
 router.post('/createTask', TaskController.createTask);
 router.delete('/deleteTask', TaskController.deleteTask);
+
+// Time Track Route
+router.get('/getAllTimeTracks', TimeTrackController.getAllTimeTracksForPeriod);
 
 router.get(
   '/allTasks',

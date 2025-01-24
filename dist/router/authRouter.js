@@ -16,6 +16,7 @@ const { handleRef } = require('../controller/refreshToken');
 const UacPermission = require('../middleware/UacMiddleware.js');
 const { upload } = require('../services/uploadService.js');
 const roleVerify = require('../middleware/roleVerify.js');
+const TimeTrackController = require('../controller/TimeTrackController.js');
 
 app.post('/upload-avatar', upload.single('avatar'), (req, res) => {
   if (!req.file) {
@@ -41,5 +42,9 @@ router.post('/login', LoginController.login);
 router.post('/logout', handleSignout);
 //Refresh token
 router.post('/refresh', handleRef);
+
+router.post('/setTimeTrack', TimeTrackController.createTimeTrack);
+router.get('/getTimeTracksForUser', TimeTrackController.getTimeTracksForUser);
+router.get('/getAllTimeTracksForUser', TimeTrackController.getAllTimeTracksForUser);
 
 module.exports = router;
